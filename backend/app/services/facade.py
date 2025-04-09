@@ -157,6 +157,10 @@ class Facade:
         return await self.spa_db.get_by_attribute("id", spa_id)
 
 
+    async def list_spas(self):
+        return await self.spa_db.get_all()
+
+
 
 
 # ___________________________________Review______________________________________________________
