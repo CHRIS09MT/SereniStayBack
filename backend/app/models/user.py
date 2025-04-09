@@ -37,17 +37,6 @@ class User_Base(BaseEntity):
             raise ValueError("middle_name should contain only one word")
         return value
 
-    allowed_domains: ClassVar[list[str]] = ["gmail.com"]
-
-    @field_validator("email", mode="before")
-    @classmethod
-    def verify_email(cls, email: str) -> str:
-        """Verify the email domain."""
-        domain = email.split("@")[-1]
-        if domain not in cls.allowed_domains:
-            raise ValueError(f"The email must be from {cls.allowed_domains}")
-        return email
-
 class Create_User(User_Base):
     password: str = Field(..., min_length=8, max_length=60)
 
@@ -70,4 +59,3 @@ class User(User_Base):
     def verify_password(plain_password: str, hashed_password: str) -> bool:
         """Verify if the entered password matches the hashed password."""
         return pwd_context.verify(plain_password, hashed_password)
-
